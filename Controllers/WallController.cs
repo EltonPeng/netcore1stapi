@@ -52,5 +52,41 @@ namespace netcore1stapi.Controllers
 
             return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(long id, Item item)
+        {
+            if(item == null || item.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var target = context.WallItems.FirstOrDefault(i => i.Id == id);
+            if(target == null)
+            {
+                return NotFound();
+            }
+
+            target.IsChecked = item.IsChecked;
+            target.Name = item.Name;
+
+            context.WallItems.Update(target);
+            context.SaveChanges();
+            return new NoContentResult();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id)
+        {
+            var item = context.WallItems.FirstOrDefault(i => i.Id == id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+
+            context.WallItems.Remove(item);
+            context.SaveChanges();
+            return new NoContentResult();
+        }
     }
 }
