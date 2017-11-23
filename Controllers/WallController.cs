@@ -40,7 +40,7 @@ namespace netcore1stapi.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem(Item item)
+        public IActionResult AddItem([FromBody] Item item)
         {
             if(item == null)
             {
@@ -54,7 +54,7 @@ namespace netcore1stapi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(long id, Item item)
+        public IActionResult Update(long id, [FromBody] Item item)
         {
             if(item == null || item.Id != id)
             {
