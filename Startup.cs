@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using netcore1stapi.Interfaces;
+using netcore1stapi.Models;
 
 namespace netcore1stapi
 {
@@ -26,6 +28,12 @@ namespace netcore1stapi
         {
             services.AddDbContext<Models.WallContext>(opt => opt.UseInMemoryDatabase("WallPanel"));
             services.AddMvc();
+
+            services.AddTransient<IOperationTransient, Operation>();
+            services.AddScoped<IOperationScoped, Operation>();
+            services.AddSingleton<IOperationSingleton, Operation>();
+            services.AddSingleton<IOperationSingletonInstance>(new Operation(Guid.Empty));
+            services.AddTransient<OperationCenter, OperationCenter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
