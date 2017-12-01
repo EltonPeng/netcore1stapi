@@ -36,7 +36,15 @@ namespace netcore1stapi
             services.AddSingleton<IOperationSingletonInstance>(new Operation(Guid.Empty));
             services.AddTransient<OperationCenter, OperationCenter>();
 
-            services.AddTransient<IBookingRepositoryService, BookingRepositoryService>();
+            //services.AddTransient<IBookingRepositoryService, BookingRepositoryService>();
+
+            // container will create the instance(s) of these types and will dispose them            
+            //services.AddSingleton<IOperationScoped>(sp => new Operation());
+
+            // container did not create instance so it will NOT dispose it
+            //services.AddSingleton<Operation>(new Operation());
+
+            ///In version 1.0, the container called dispose on all IDisposable objects, including those it did not create.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

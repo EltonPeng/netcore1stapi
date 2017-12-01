@@ -4,6 +4,7 @@ using netcore1stapi.Models;
 
 namespace netcore1stapi.Controllers
 {
+    [Route("api/[controller]")]
     public class OperationsController : Controller 
     {
         private OperationCenter OperationCenter;
@@ -29,9 +30,26 @@ namespace netcore1stapi.Controllers
             OperationSingletonInstance = operationSingletonInstance;
         }
 
+        ///this.HttpContext.RequestServices.GetService()
+        ///Generally, you shouldn't use these properties directly, 
+        ///preferring instead to request the types your classes 
+        ///you require via your class's constructor, and 
+        ///letting the framework inject these dependencies. 
+        ///This yields classes that are easier to test (see Testing) 
+        ///and are more loosely coupled.
+
+        [HttpGet]
         public IActionResult Index()
         {
-            var result = new { transient = OperationTransient.OperationId, scoped = OperationScoped.OperationId };
+            var result = new { 
+                transient = OperationTransient.OperationId, 
+                scoped = OperationScoped.OperationId,
+                singleton = OperationSingleton.OperationId,
+                singletonInstance = OperationSingletonInstance.OperationId,
+                center_transient = OperationCenter.OperationTransient,
+                center_scoped = OperationCenter.OperationScoped,
+                center_singleton = OperationCenter.OperationSingleton,
+                center_singletonInstance = OperationCenter.OperationSingletonInstance };
 
             return new ObjectResult(result);
         }
