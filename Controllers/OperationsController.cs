@@ -31,7 +31,9 @@ namespace netcore1stapi.Controllers
 
         public IActionResult Index()
         {
-            return new ObjectResult(OperationTransient.OperationId);
+            var result = new { transient = OperationTransient.OperationId, scoped = OperationScoped.OperationId };
+
+            return new ObjectResult(result);
         }
     }
 }

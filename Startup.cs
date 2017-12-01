@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using netcore1stapi.Interfaces;
 using netcore1stapi.Models;
+using netcore1stapi.Services;
 
 namespace netcore1stapi
 {
@@ -34,6 +35,8 @@ namespace netcore1stapi
             services.AddSingleton<IOperationSingleton, Operation>();
             services.AddSingleton<IOperationSingletonInstance>(new Operation(Guid.Empty));
             services.AddTransient<OperationCenter, OperationCenter>();
+
+            services.AddTransient<IBookingRepositoryService, BookingRepositoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
