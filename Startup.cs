@@ -28,7 +28,7 @@ namespace netcore1stapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Models.WallContext>(opt => opt.UseInMemoryDatabase("WallPanel"));
-            services.AddSession();
+            
             services.AddMvc();
 
             services.AddTransient<IOperationTransient, Operation>();
@@ -51,12 +51,15 @@ namespace netcore1stapi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            env.EnvironmentName = EnvironmentName.Development;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseSession();
+            else 
+            {
+                app.UseExceptionHandler("/error");
+            }
 
             app.UseMvc();
         }

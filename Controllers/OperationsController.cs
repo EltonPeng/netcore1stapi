@@ -42,7 +42,6 @@ namespace netcore1stapi.Controllers
         public IActionResult Index()
         {
             var result = new { 
-                sessionId = HttpContext.Session.Id,
                 transient = OperationTransient.OperationId, 
                 scoped = OperationScoped.OperationId,
                 singleton = OperationSingleton.OperationId,
