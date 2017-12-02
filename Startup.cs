@@ -28,6 +28,7 @@ namespace netcore1stapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Models.WallContext>(opt => opt.UseInMemoryDatabase("WallPanel"));
+            services.AddSession();
             services.AddMvc();
 
             services.AddTransient<IOperationTransient, Operation>();
@@ -54,6 +55,8 @@ namespace netcore1stapi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSession();
 
             app.UseMvc();
         }
